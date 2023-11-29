@@ -8,8 +8,8 @@ def exact(adjacency_matrix):
 def approximate_search(adjacency_matrix):
     pass
 
-def local_search(adjacency_matrix):
-    pass
+def local_search(adjacency_matrix, seed):
+    return 10, [1, 2, 3 , 4, 5]
 
 def euclidean_distance(p1, p2):
     x1, y1 = p1
@@ -45,17 +45,30 @@ def tsp_parser(inst):
                 pass
     return city, dimension, edge_weight_type, locations
 
+def generate_solution(file_name, quality, ids):
+    lines = [quality, ids]
+    with open(file_name + ".sol", 'w') as file:
+        for line in lines:
+            file.write(str(line) + "\n")
+        
+
 def main(inst, alg, time, seed):
     # parse the .TSP file create 2D adjacency matrix for graph representation
     city, dimension, edge_weight_type, locations = tsp_parser(inst)
     adjacency_matrix = construct_graph(locations)
     print(adjacency_matrix)
     if alg == 'BF':
-        output = exact(adjacency_matrix)
+        quality, ids = exact(adjacency_matrix)
+        file_name = str(city) + "_" + str(alg) + "_" + str(time)
+        generate_solution(file_name, quality, ids)
     elif alg == 'Approx':
-        output = approximate_search(adjacency_matrix)
+        quality, ids  = approximate_search(adjacency_matrix)
+        file_name = str(city) + "_" + str(alg) + "_" + str(seed)
+        generate_solution(file_name, quality, ids)
     elif alg == 'LS':
-        output = local_search(adjacency_matrix, seed)
+        quality, ids  = local_search(adjacency_matrix, seed)
+        file_name = str(city) + "_" + str(alg) + "_" + str(time) + "_" + str(seed)
+        generate_solution(file_name, quality, ids)
         
     
 
