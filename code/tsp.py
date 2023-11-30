@@ -17,7 +17,7 @@ def local_search(adjacency_matrix, time_limit, seed):
     Utilized random resets and 'hill climbing' (optimization based on neighborhood function) 
     to improve on initial solution. To track how the model optimizes a solution uncomment 
     the lines marked in the function. Helper functions used can be found in the LocalTSPHelper.py 
-    funciton.
+    funciton. Randomization seeds are used and updated thorughout to generate repeatable but unique numbers.
 
     Parameters:
     - adjacency_matrix: Represents the graph
@@ -29,21 +29,21 @@ def local_search(adjacency_matrix, time_limit, seed):
     - ids: List of node ids representing TSP solution
     """
     start_time = time.time()
-    quality, ids = random_walk(adjacency_matrix, seed)
+    quality, ids = random_walk(adjacency_matrix, seed)                              # Create a random preliminary solution
     # print(quality) # Uncomment this to see starting quality score
     while True:
         if time.time() - start_time >= time_limit:
             break
         old_quality, old_ids = quality, ids
         seed += 1
-        hquality, hids = hill_climbing(quality, ids, adjacency_matrix, seed)
+        hquality, hids = hill_climbing(quality, ids, adjacency_matrix, seed)        # Find neighboring solutions and accept if quality is better
         if hquality < quality:
             # print('Improved from:' + quality + " to " + hquality) # Uncomment this to see how hill climbing improves quality
             quality = hquality
             ids = hids
         if old_ids == ids and quality == old_quality:
             seed += 1
-            random_quality, random_ids = random_walk(adjacency_matrix, seed)
+            random_quality, random_ids = random_walk(adjacency_matrix, seed)        # If local minima has been reached try random reset, accept if quality is better   
             if random_quality < quality:
                 quality = random_quality
                 ids = random_ids

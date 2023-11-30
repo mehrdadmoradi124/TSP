@@ -27,19 +27,19 @@ def random_walk(locations, seed):
     ids.append(start)
     visited.add(start)
     for i in range(1, len(locations)):
-        min_weight = float('inf')
+        min_weight = float('inf')                           # Initialize distance to positive infinity
         next_location = None
 
-        for j in range(len(locations)):
-            if j not in visited and locations[start][j] < min_weight:
-                min_weight = locations[start][j]
-                next_location = j
+        for j in range(len(locations)):                     # Loop through all potential edges for given node
+            if j not in visited and locations[start][j] < min_weight:   
+                min_weight = locations[start][j]    
+                next_location = j                           # If distance is shorter than others store 
 
         ids.append(next_location)
         quality += min_weight
         visited.add(next_location)
-        start = next_location
-    quality += locations[start][ids[0]]
+        start = next_location                               # Add the node at the shortest distance from a given node as the next node in the solution
+    quality += locations[start][ids[0]]                     # Add distance from final node back to starting point
     return quality, ids
     
 
@@ -62,17 +62,17 @@ def hill_climbing(quality, ids, locations, seed):
     first = random.randint(0, len(ids)-1)
     second = random.randint(0, len(ids)-1)
     while second == first:
-        second = random.randint(0, len(ids)-1)
+        second = random.randint(0, len(ids)-1)              # Initialize two unique random ids corresponding to nodes
     
     new_ids = ids.copy()
     new_ids[first] = ids[second]
-    new_ids[second] = ids[first]
+    new_ids[second] = ids[first]                            # Switch the two nodes to generate a neighboring solution
     new_quality = 0
-    for i in range(len(new_ids)-1):
+    for i in range(len(new_ids)-1):                         # Find quality of neighboring solution
         new_quality += locations[new_ids[i]][new_ids[i + 1]]
     new_quality += locations[new_ids[-1]][new_ids[0]]
     
-    if new_quality < quality:
+    if new_quality < quality:                               # If neighboring solution is better than original accept, else reject
         return new_quality, new_ids
     else:
         return quality, ids
