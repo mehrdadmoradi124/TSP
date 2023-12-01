@@ -23,11 +23,12 @@ def brute_force_tsp(distances, time_limit):
     best_tour = None
     best_distance = float('inf')
 
-    for perm in itertools.permutations(cities):
-        current_tour_distance = calculate_total_distance(perm, distances)
+    for perm in itertools.permutations(cities[1:):
+        tour=[cities[0]]+list(perm)
+        current_tour_distance = calculate_total_distance(tour, distances)
         if current_tour_distance < best_distance:
             best_distance = current_tour_distance
-            best_tour = perm
+            best_tour = tour
 
         elapsed_time = time.time() - start_time
         if elapsed_time > time_limit:
