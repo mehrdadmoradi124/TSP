@@ -1,2 +1,22 @@
 # cse-6140-project
 cse-6140-project
+
+
+
+# Instructions
+
+### Executable
+
+To run the executable navigate to the `/Code` dir and use the following command:
+
+`.\tsp.exe -inst Atlanta.tsp -alg LS -time 1 -seed 42 `
+
+The parameters can be changed as desired.
+
+### Python Script
+
+To run the executable navigate to the `/Code` dir and use the following command:
+
+`python tsp.py -inst Atlanta.tsp -alg LS -time 600 -seed 42`
+
+The parameters can be changed as desired.
