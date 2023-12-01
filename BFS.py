@@ -1,6 +1,8 @@
 """
 Brute Force algorithm for Traveling salesman problem
 Author: Mehrdad Moradi
+
+Main function in this file is brute_force_tsp(distances, time_limit) which gets 2d list of distances, and the time limit and returns best tour and distance
 """
 
 import itertools
