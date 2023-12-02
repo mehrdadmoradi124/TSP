@@ -37,7 +37,7 @@ def brute_force_tsp(distances, time_limit):
         if elapsed_time > time_limit:
             break
 
-    return best_tour, best_distance
+    return best_distance, best_tour
 
 # Example usage:
 if __name__ == "__main__":
