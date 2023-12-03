@@ -85,7 +85,7 @@ def construct_graph(locations):
 
 def tsp_parser(inst):
     locations = []
-    with open('data/' + inst, 'r') as file:
+    with open('DATA/' + inst, 'r') as file:
         for line in file:
             words = line.split()
             if len(words) == 0:
