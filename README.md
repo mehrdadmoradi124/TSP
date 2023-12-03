@@ -2,6 +2,13 @@
 cse-6140-project
 
 
+### Group 4	
+- Faisal Baig	fbaig6@gatech.edu
+- Robert E Quinn	rquinn33@gatech.edu
+- Neelkamal Bhuyan	nbhuyan3@gatech.edu
+- Mehrdad Moradi	mehrdadmoradi@gatech.edu
+- Milad Heydari	miladgheydari@gatech.edu
+
 
 # Instructions
 
