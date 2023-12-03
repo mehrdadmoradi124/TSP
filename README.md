@@ -9,7 +9,11 @@ cse-6140-project
 
 To run the executable navigate to the `/Code` dir and use the following command:
 
-`.\tsp.exe -inst Atlanta.tsp -alg LS -time 1 -seed 42 `
+`chmod +x exec`
+
+`./exec -inst Atlanta.tsp -alg LS -time 1 -seed 42`
+
+`./exec -inst Berlin.tsp -alg LS -time 1 -seed 42`
 
 The parameters can be changed as desired.
 
