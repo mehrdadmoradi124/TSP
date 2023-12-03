@@ -9,7 +9,6 @@ Original file is located at
 
 import os
 import sys
-import numpy as np
 
 def dfs(visited, graph, node):  #function for depth first search
   if node not in visited:
