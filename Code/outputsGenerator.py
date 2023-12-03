@@ -10,7 +10,7 @@ createFiles = True
 #can flag off if files already exist. Make this False and pull in the data from the outputs folder 
 #to save a lot of time
 
-timeLimit = 5 
+times = [10, 20, 40, 80] 
  # in seconds
 
 city_list = [
@@ -40,60 +40,60 @@ def getQuality(filename):
         print("The file does not have a second line.")
 
 #------------- code begins here
-
-for city in city_list:
-    #BF======================================================================
-    CSVEntry = [city, str(timeLimit)]
-    BFcommand = "python3 tsp.py -inst " + city + " -alg BF -time " + str(timeLimit) + " -seed 0"
-    if createFiles:
-        try:
-            os.system(BFcommand)
-        except Exception as e:
-            print(f"Error: {e}")
-    BFfileName = city[:-4] + "_" + "BF" + "_" + str(timeLimit) + ".sol"
-    score = getQuality(BFfileName)
-    CSVEntry.append(score) # "Sol.Quality - BF
-    CSVEntry.append("Yes") # full tour
-    CSVEntry.append("TBD") # full tour
-    #Approx======================================================================
-    now = t()
-    Approxcommand = "python3 tsp.py -inst " + city + " -alg Approx -time " + str(timeLimit) + " -seed 0"
-    if createFiles:
-        try:
-            os.system(Approxcommand)
-        except Exception as e:
-            print(f"Error: {e}")
-    ApproxfileName = city[:-4] + "_" + "Approx" + "_" + "0" + ".sol"
-    timePassed = t() - now
-    CSVEntry.append(timePassed) #Time(s) - Approx
-    score = getQuality(ApproxfileName) 
-    CSVEntry.append(score) # "Sol.Quality - Approx
-    CSVEntry.append("TBD") # "RelError - Aprox"
-    #LST===================================================================
-    quality = 0
-    for seed in range(10):
-        LScommand = "python3 tsp.py -inst " + city + " -alg LS -time " + str(timeLimit) + " -seed " + str(seed)
+for timeLimit in times:
+    for city in city_list:
+        #BF======================================================================
+        CSVEntry = [city, str(timeLimit)]
+        BFcommand = "python3 tsp.py -inst " + city + " -alg BF -time " + str(timeLimit) + " -seed 0"
         if createFiles:
             try:
-                os.system(LScommand)
+                os.system(BFcommand)
             except Exception as e:
                 print(f"Error: {e}")
-        LSfileName = city[:-4] + "_" + "LS" + "_" + str(timeLimit) + "_" + str(seed) + ".sol"
-        quality += int(getQuality(LSfileName))
-    avgQuality = quality / 10
-    CSVEntry.append(str(timeLimit)) #Time(s) - LS" "Sol.Quality - LS ", 
-    CSVEntry.append(str(avgQuality)) #"Sol.Quality - LS 
-    #==================
+        BFfileName = city[:-4] + "_" + "BF" + "_" + str(timeLimit) + ".sol"
+        score = getQuality(BFfileName)
+        CSVEntry.append(score) # "Sol.Quality - BF
+        CSVEntry.append("Yes") # full tour
+        CSVEntry.append("TBD") # full tour
+        #Approx======================================================================
+        now = t()
+        Approxcommand = "python3 tsp.py -inst " + city + " -alg Approx -time " + str(timeLimit) + " -seed 0"
+        if createFiles:
+            try:
+                os.system(Approxcommand)
+            except Exception as e:
+                print(f"Error: {e}")
+        ApproxfileName = city[:-4] + "_" + "Approx" + "_" + "0" + ".sol"
+        timePassed = t() - now
+        CSVEntry.append(timePassed) #Time(s) - Approx
+        score = getQuality(ApproxfileName) 
+        CSVEntry.append(score) # "Sol.Quality - Approx
+        CSVEntry.append("TBD") # "RelError - Aprox"
+        #LST===================================================================
+        quality = 0
+        for seed in range(10):
+            LScommand = "python3 tsp.py -inst " + city + " -alg LS -time " + str(timeLimit) + " -seed " + str(seed)
+            if createFiles:
+                try:
+                    os.system(LScommand)
+                except Exception as e:
+                    print(f"Error: {e}")
+            LSfileName = city[:-4] + "_" + "LS" + "_" + str(timeLimit) + "_" + str(seed) + ".sol"
+            quality += int(getQuality(LSfileName))
+        avgQuality = quality / 10
+        CSVEntry.append(str(timeLimit)) #Time(s) - LS" "Sol.Quality - LS ", 
+        CSVEntry.append(str(avgQuality)) #"Sol.Quality - LS 
+        #==================
 
-    LSTSol = float(avgQuality)
-    BFError = float(CSVEntry[2]) / LSTSol
-    CSVEntry[4] = str(BFError)
+        LSTSol = float(avgQuality)
+        BFError = float(CSVEntry[2]) / LSTSol
+        CSVEntry[4] = str(BFError)
 
 
-    ApproxRelError = float(CSVEntry[6]) / LSTSol
-    CSVEntry[7] = str(ApproxRelError)
+        ApproxRelError = float(CSVEntry[6]) / LSTSol
+        CSVEntry[7] = str(ApproxRelError)
 
-    CSVData.append(CSVEntry)
+        CSVData.append(CSVEntry)
 
 
 
